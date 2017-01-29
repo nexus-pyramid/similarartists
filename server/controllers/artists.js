@@ -1,45 +1,65 @@
+////////////////////////////////////////
+//Define artistsController
+//// This controller will be used for interacting with the API
 function artistsController(){
-	//View all users
-	// var data = [{
-	// 	"name": "Miley Cyrus",
-	// 	"similar": ["Ali Lohan", "Aly & AJ", "Jordan Pruitt", "Raven-Symoné", "Ashlee Simpson", "Jonas Brothers", "Zac Efron", "Selena Gomez", "Corbin Bleu", "Justin Bieber", "Jesse McCartney", "Hilary Duff", "Mitchel Musso", "Miranda Cosgrove", "Vanessa Hudgens", "Emily Osment", "Demi Lovato", "Ashley Tisdale", "Carly Rae Jepsen"]
-	// }, {
-	// 	"name": "Justin Bieber",
-	// 	"similar": ["One Direction", "Kevin Rudolf", "Selena Gomez", "Miranda Cosgrove", "Midnight Red", "Travis Garland", "Keke Palmer", "Demi Lovato", "Chris Brown", "Trey Songz", "Karina Pasian", "Kristinia DeBarge", "Jordin Sparks", "Hannah Montana", "Jonas Brothers", "Zac Efron", "Greyson Chance", "Angel", "Katy Perry", "Miley Cyrus", "Taylor Swift", "Mindless Behavior", "Jason Derulo", "Drop City Yacht Club"]
-	// }, {
-	// 	"name": "Adele",
-	// 	"similar": ["Kristina Train", "Alessi's Ark", "Lana Del Rey", "Coldplay", "Amy Winehouse", "Lykke Li", "Ellie Goulding", "Passenger", "Rumer", "Joss Stone", "Kate Nash", "Lily Allen", "OneRepublic", "Feist", "Katie Melua", "Gabriella Cilmi", "Florence + The Machine", "Natasha Bedingfield", "Jamie Cullum", "MoZella", "Corinne Bailey Rae", "Basia Bulat", "Ed Sheeran", "KT Tunstall", "Beth Orton", "Nikki Jean", "Jessie Baylin", "Regina Spektor", "Liam Bailey", "Duffy", "Leona Lewis"]
-	// }, {
-	// 	"name": "DJ Khaled",
-	// 	"similar": ["Plies", "Sheek Louch", "2 Chainz", "Juicy J", "T.I.", "Birdman", "Gucci Mane", "Ace Hood", "Pitbull", "Fat Joe", "Clinton Sparks", "DJ Drama"]
-	// }]
 
+	////////////////////////////////////////
+	// Import JSON
 	var data  = require('../data/artists.json')
+	////////////////////////////////////////
 
 
 
+
+	////////////////////////////////////////
+	// The base URL route
 	this.index = function(req,res){ 
-		res.json("We out here");
+		res.json("Maybe load some links here...");
 	}
+	// END this.index
+	////////////////////////////////////////
 
 
+
+	////////////////////////////////////////
+	// '/artist' route
+	//// Loads the entire JSON file
+	this.getAll = function(req,res){ 
+		res.json(data);
+	}
+	// END this.getAll
+	////////////////////////////////////////
+
+
+	////////////////////////////////////////
+	// '/artist/:artistname' route
+	//// Loads a single artist entry
 	this.getOne = function(req,res){
+		// Did we already create a response?
 		var responseSent = false;
+
+		//Iterate through JSON data
 		for (each in data) {
+			//If data.name equals request parameter
 			if (data[each].name.toLowerCase() == req.params.artistname.toLowerCase()) {
-				res.json(data[each]);		
-				responseSent = true;
-			} 
-		}
+				res.json(data[each]); // Send response
+				responseSent = true;  // Set boolean to True
+			} // If
+		} // For
 
+		// If we haven't sent a response
+		//// Spit out the request parameter
 		if (!responseSent){
-			res.json(req.params.artistname);	
-		}
-		
+			res.json("Couldn't find artist: " + req.params.artistname);	
+		}	
 	}
-
-
+	// END this.getOne
+	////////////////////////////////////////
 
 }
+// END artistsController
+////////////////////////////////////////
 
+////////////////////////////////////////
+// Create new instance of artistsController
 module.exports = new artistsController();
