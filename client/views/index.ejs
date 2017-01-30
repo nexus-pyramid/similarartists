@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>all artists</title>
+
+  </head>
+  <body>
+    <h2> all artists </h2>
+
+      <div>
+    			<% for(x in artists) { %>
+    					<p>Name: <%= artists[x].name %></p>
+    					<% } %>
+      </div>
+    <form method="get" action="./artist">
+    <button type="submit">Continue</button>
+    </form>
+
+  </body>
+</html>

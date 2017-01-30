@@ -3,6 +3,6 @@ var path		= require('path'),
 
 
 module.exports = function(app){
-	app.get('/', artists.index);  	//Create a new user	
-	app.get('/artist/:artistname', artists.getOne);  	//Create a new user	
+	app.get('/', artists.index);  	//Create a new user
+	app.get('/artist', artists.sketch);  	//Create a new user	
 }

@@ -1,21 +1,22 @@
 "use strict";
 
-var express = require('express'),
-	session = require('express-session'),
-	bp		= require('body-parser'), 		//request body parser
-	path 	= require('path'),				//easy file path
-	root	= __dirname,					//current file path
-	port 	= process.env.PORT || 8000,		//define port
-	app 	= express();
+var mongoose = require( 'mongoose' ),
+	  express = require('express'),
+		session = require('express-session'),
+		bp		= require('body-parser'), 		//request body parser
+		path 	= require('path'),				//easy file path
+		root	= __dirname,					//current file path
+		port 	= process.env.PORT || 8000,		//define port
+		app 	= express();
 
 
 //configure session
 var sessionConfig = {
-	secret:'CookieMonster',
-	resave:false,
-	saveUninitialized:true,
-	name:'myCookie',
-	cookie:{
+	  secret:'CookieMonster',
+		resave:false,
+		saveUninitialized:true,
+		name:'myCookie',
+		cookie:{
 		secure: false,
 		httpOnly:false,
 		maxAge: 3600000
@@ -27,7 +28,12 @@ app.use(bp.json({extended:true}));
 app.use(express.static(path.join(root,'client')));
 app.use(session(sessionConfig));
 
+app.set("views", __dirname + "/client/views");
+app.set('view engine', 'ejs');
+app.engine('html', require('ejs').renderFile);
+
 //include routes in your app
+require("./server/config/mongoose.js");
 require("./server/config/routes.js")(app);
 
 //Start server
